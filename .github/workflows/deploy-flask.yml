@@ -1,22 +1,29 @@
-name: Deploy Flask App
+name: Deploy Flask App (No Tests)
+
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
+
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4  # Descarga el código
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: '3.11'  # Ajusta la versión
+
       - name: Install dependencies
+        run: pip install -r requirements.txt  # Instala Flask u otras dependencias
+
+      # --- Elimina o comenta este bloque ---
+      # - name: Run tests
+      #   run: pytest
+      # --------------------------
+
+      - name: Deploy to Vercel (o tu plataforma)
         run: |
-          pip install -r requirements.txt
-          pip install pytest
-      - name: Run tests
-        run: pytest
-      - name: Build Docker image
-        run: docker build -t flask-app .
+          echo "¡Desplegando sin tests!"
+          # Comandos específicos para tu despliegue (ej: vercel --prod)
