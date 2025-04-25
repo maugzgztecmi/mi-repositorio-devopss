@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return jsonify({"message": "¡Hola desde Flask en Vercel!"})  # Cambia el mensaje para confirmar que es la versión nueva
+    return jsonify({"message": "¡Hola desde Flask en Vercel xd!"})  # Cambia el mensaje para confirmar que es la versión nueva
 
 # Elimina estas líneas (Vercel maneja el host/port automáticamente):
 # if __name__ == "__main__":
