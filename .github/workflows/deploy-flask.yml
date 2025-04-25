@@ -1,29 +1,26 @@
-name: Deploy Flask App (No Tests)
+name: Deploy to Vercel
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4  # Descarga el código
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'  # Ajusta la versión
+      - name: Install Vercel CLI
+        run: npm install -g vercel
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt  # Instala Flask u otras dependencias
+      - name: Pull Vercel Environment Info
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      # --- Elimina o comenta este bloque ---
-      # - name: Run tests
-      #   run: pytest
-      # --------------------------
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
 
-      - name: Deploy to Vercel (o tu plataforma)
-        run: |
-          echo "¡Desplegando sin tests!"
-          # Comandos específicos para tu despliegue (ej: vercel --prod)
+      - name: Deploy to Vercel
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
